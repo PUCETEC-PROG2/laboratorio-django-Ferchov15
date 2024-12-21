@@ -4,7 +4,10 @@ from .models import Trainer
 
 # Register your models here.
 @admin.register(Pokemon)
-@admin.register(Trainer)
-
 class PokemonAdmin (admin.ModelAdmin):
+        pass
+
+
+@admin.register(Trainer)
+class TrainerAdmin (admin.ModelAdmin):
         pass
