@@ -1,15 +1,50 @@
 {% extends "base.html" %}
 {% block title %}Entrenadores{% endblock title %}
 {% block content %}
- <p class="p-2">Entrenadores</p> 
-  <ul class="list-group">
-      {% for trainer in trainers %}
-      <li class="list-group-item">
-        <a href="trainer/{{trainer.pk}}">{{ trainer | capfirst }}</a>
-      </li>
-      {% endfor %}
-  </ul>
- 
+<p class="p-2">Hola, esta es tu lista de entrenadores:</p>
+{% if user.is_authenticated %}
+   <a href="{% url "pokedex:add_trainer" %}">Añadir Entrenador</a>
+ {% endif %}
+<div class="container">
+  <div class="row">
+    {% for trainer in trainers %}
+    <div class="col-md-6 mb-4">
+      <br> 
+      <div class="card h-100">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img 
+              src="{{ trainer.trainer_picture.url }}" 
+              class="img-fluid h-100" 
+              alt="Imagen del entrenador" 
+              style="object-fit: cover;">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ trainer | capfirst }}</h5>
+              <p class="card-text">
+                Edad: {{ trainer.age|default:"No especificada" }}
+              </p>
+              <p class="card-text">Nivel: {{ trainer.level }}</p>
+              <br>
+              <a href="trainer/{{ trainer.pk }}" class="btn btn-primary">
+                <i class="fa-solid fa-eye"></i> 
+              </a>
+              {% if user.is_authenticated %}
+              <a href="edit_trainer/{{trainer.pk}}" class="btn btn-primary">
+                <i class="fa-solid fa-pencil"></i>
+              </a>
+              <a href="delet_trainer/{{trainer.pk}}" class="btn btn-danger">
+                <i class="fa-solid fa-trash"></i>
+              </a>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock content %}
- 
- 
